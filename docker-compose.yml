@@ -1,0 +1,25 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: SecurePassword123!
+      POSTGRES_PORT: 5432
+    ports:
+      - 5432:5432
+    volumes:
+      - db_cache:/var/lib/postgresql/data
+  
+  elastic:
+    image: elasticsearch:8.13.4
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+volumes:
+  db_cache:
+    driver: local
